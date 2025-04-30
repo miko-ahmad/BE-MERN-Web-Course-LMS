@@ -1,0 +1,12 @@
+# Abaikan file log
+*.log
+
+# Abaikan folder node_modules
+node_modules/
+
+# Abaikan file environment
+.env
+
+# Abaikan build/ dan dist/
+dist/
+build/
