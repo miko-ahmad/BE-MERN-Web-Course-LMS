@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const trancastionModel = new mongoose.Schema({
+const transactionModel = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -20,4 +20,4 @@ const trancastionModel = new mongoose.Schema({
 }
 )
 
-export default mongoose.model("Transaction". trancastionModel)
+export default mongoose.model("Transaction", transactionModel)
