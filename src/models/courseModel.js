@@ -13,7 +13,7 @@ const courseModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     },
-    tagLine: {
+    tagline: {
         type: String,
         required: true
     }, 
@@ -21,10 +21,10 @@ const courseModel = mongoose.Schema({
         type: String,
         required: true
     }, 
-    students: {
+    students: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    },
+    }],
     manager: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

@@ -1,6 +1,6 @@
 import express from 'express'
 import multer from 'multer'
-import { getCourses } from '../controllers/courseController.js'
+import { getCourses, postCourse } from '../controllers/courseController.js'
 import { verifyToken } from '../middlewares/verifyToken.js'
 import { fileFilter, fileStorageCourse } from '../utils/multer.js'
 
@@ -12,5 +12,5 @@ const upload = multer({
 })
 
 courseRoutes.get('/courses', verifyToken, getCourses)
-courseRoutes.post('/courses', verifyToken, upload.single('thumbnail'), getCourses)
+courseRoutes.post('/courses', verifyToken, upload.single('thumbnail'), postCourse)
 export default courseRoutes

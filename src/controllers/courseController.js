@@ -1,3 +1,4 @@
+
 import categoryModel from "../models/categoryModel.js";
 import courseModel from "../models/courseModel.js";
 import userModel from "../models/userModel.js";
@@ -16,14 +17,28 @@ export const getCourses = async (req, res) => {
         select: "name -_id",
       })
       .populate({
-        path: "student",
+        path: "students",
         select: "name",
       });
 
+      const  imageUrl = process.env.APP_URL + '/uploads/courses/'
+
+      const response = courses.map((item) => {
+        return {
+          ...item.toObject(),
+          thumbnail_url : imageUrl + item.thumbnail,
+          total_students: item.students.length
+        }
+      })
+
+      
     return res.json({
+      
       message: "Get Courses Success",
-      data: courses,
+      data: response
     });
+
+    
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -35,6 +50,9 @@ export const getCourses = async (req, res) => {
 export const postCourse = async (req, res) => {
   try {
     const body = req.body;
+
+   
+    
     const parse = mutateCourseSchema.safeParse(body);
     if (!parse.success) {
       const errorMessages = parse.error.issues.map((err) => err.message);
