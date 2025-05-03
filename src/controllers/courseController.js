@@ -4,6 +4,8 @@ import courseModel from "../models/courseModel.js";
 import userModel from "../models/userModel.js";
 import { mutateCourseSchema } from "../utils/schema.js";
 import fs from "fs";
+import courseDetailModel from "../models/courseDetailModel.js";
+import { type } from "os";
 
 export const getCourses = async (req, res) => {
   try {
@@ -47,7 +49,7 @@ export const getCourseById = async (req, res) => {
   try {
     const {id} = req.params
 
-    const course = await courseModel.findById(id)
+    const course = await courseModel.findById(id).populate('details')
 
     return res.json({
       message: 'Get Course Detail success',
@@ -214,3 +216,34 @@ export const deleteCourse = async (req, res) => {
     });
   }
 };
+
+export const postContentCourse = async (req,res) => {
+  try {
+    const body = req.body
+    const course = await courseModel.findById(body.courseId)
+    const content = new courseDetailModel({
+      title: body.title,
+      type: body.type,
+      course: course._id,
+      text: body.text,
+      youtubeId: body.youtubeId
+    })
+
+    await content.save()
+    await courseModel.findByIdAndUpdate(course._id, {
+      $push: {
+        details: content._id
+      }
+    }, {new: true})
+
+    return res.json({
+      message: 'Create content Success',
+    })
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+}

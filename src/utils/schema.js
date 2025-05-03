@@ -17,7 +17,13 @@ export const mutateCourseSchema = z.object({
     categoryId: z.string(),
     tagline: z.string().min(5),
     description: z.string().min(10),
-    
-    
+})
+
+export const mutateContentSchema = z.object({
+    title: z.string().min(5),
+    type: z.string(),
+    youtubeId: z.string().optional(),
+    text: z.string().optional(),
+    courseId: z.string().min(5)
 })
 

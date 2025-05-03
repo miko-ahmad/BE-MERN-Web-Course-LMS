@@ -1,8 +1,10 @@
 import express from 'express'
 import multer from 'multer'
-import { deleteCourse, getCategories, getCourseById, getCourses, postCourse, updateCourse } from '../controllers/courseController.js'
+import { deleteCourse, getCategories, getCourseById, getCourses, postContentCourse,  postCourse, updateCourse } from '../controllers/courseController.js'
 import { verifyToken } from '../middlewares/verifyToken.js'
 import { fileFilter, fileStorageCourse } from '../utils/multer.js'
+import {validateRequest} from "../middlewares/validateRequest.js"
+import { mutateContentSchema } from '../utils/schema.js'
 
 const courseRoutes = express.Router()
 
@@ -17,5 +19,6 @@ courseRoutes.get('/courses/:id', verifyToken, getCourseById)
 courseRoutes.post('/courses', verifyToken, upload.single('thumbnail'), postCourse)
 courseRoutes.put('/courses/:id', verifyToken, upload.single('thumbnail'), updateCourse)
 courseRoutes.delete('/courses/:id', verifyToken, deleteCourse)
+courseRoutes.post('/courses/contents',verifyToken, validateRequest(mutateContentSchema), postContentCourse)
 
 export default courseRoutes
