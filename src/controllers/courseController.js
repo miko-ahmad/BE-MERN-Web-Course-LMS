@@ -370,7 +370,7 @@ export const postStudentToCourse = async (req, res) => {
 
     await userModel.findByIdAndUpdate(body.studentId, {
       $push: {
-        course: id
+        courses: id
       }
     })
 
