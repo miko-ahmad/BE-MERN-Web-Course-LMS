@@ -2,7 +2,9 @@ import transactionModel from "../models/transactionModel.js";
 
 export const handlePayment = async (req, res) => {
     try {
+
         const body = req.body
+        console.log("Received webhook:", req.body);
 
         const orderId = body.order_id
 

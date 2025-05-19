@@ -58,7 +58,7 @@ export const signUpAction = async (req, res) => {
     return res.json({
       message: "Sign Up success",
       data: {
-        midtrans_payment_url: resMidtrans.redirect_url,
+        midtrans_payment_url: resMidtrans.redirect_url
       },
     });
   } catch (error) {
@@ -73,8 +73,7 @@ export const signInAction = async (req, res) => {
   try {
     const body = req.body; //email password
 
-    const existingUser = await userModel
-      .findOne()
+    const existingUser = await userModel.findOne()
       .where("email")
       .equals(body.email);
 
@@ -95,12 +94,12 @@ export const signInAction = async (req, res) => {
       });
     }
 
-    const invalidUser = await transactionModel.findOne({
+    const isValidUser = await transactionModel.findOne({
       user: existingUser._id,
       status: "success",
     });
 
-    if (existingUser.role !== "student" && !invalidUser) {
+    if (existingUser.role !== "student" && !isValidUser) {
       return res.status(400).json({
         message: "User not verified",
       });

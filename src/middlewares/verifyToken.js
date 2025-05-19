@@ -16,7 +16,7 @@ export const verifyToken = async (req, res, next) => {
         )
 
         if (!user) {
-            return res.status(400),json({
+            return res.status(400).json({
                 message: 'Token expired'
             })
         }
